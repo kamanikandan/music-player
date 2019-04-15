@@ -25,67 +25,8 @@
                     </tr>
                 </thead>
 
-                <tbody>
-                    <tr class="playing-track">
-                        <td>1</td>
-                        <td>Dunnock in Second</td>
-                        <td>John Smith</td>
-                        <td>3.32</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Dunnock in Second</td>
-                        <td>John Smith</td>
-                        <td>3.32</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Dunnock in Second</td>
-                        <td>John Smith</td>
-                        <td>3.32</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Dunnock in Second</td>
-                        <td>John Smith</td>
-                        <td>3.32</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Dunnock in Second</td>
-                        <td>John Smith</td>
-                        <td>3.32</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Dunnock in Second</td>
-                        <td>John Smith</td>
-                        <td>3.32</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>Dunnock in Second</td>
-                        <td>John Smith</td>
-                        <td>3.32</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>Dunnock in Second</td>
-                        <td>John Smith</td>
-                        <td>3.32</td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>Dunnock in Second</td>
-                        <td>John Smith</td>
-                        <td>3.32</td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>Dunnock in Second</td>
-                        <td>John Smith</td>
-                        <td>3.32</td>
-                    </tr>
+                <tbody class="audio-playlist" id="audio-playlist">
+
                 </tbody>
             </table>
         </div>
@@ -93,22 +34,24 @@
             <div class="playing-progress"></div>
             <div class="track-wrapper">
                 <div class="track-info">
-                    <h4 class="white-text">Dunnock in Second</h4>
-                    <h5>
+                    <h4 id="currentTrackTitle" class="white-text">Dunnock in Second</h4>
+                    <h5 id="currentTrackArtist">
                         John Smith
                     </h5>
                 </div>
+                <audio id="audio-track" src="audios/audio1.mp3"></audio>
                 <div class="audio-controls white-text">
                     <i title="Loop" class="ion-ios-loop-strong"></i>
-                    <i title="Previous" class="ion-ios-skipbackward"></i>
-                    <i title="Play" class="ion-ios-play"></i>
-                    <i title="Pause" class="ion-ios-pause"></i>
-                    <i title="Next" class="ion-ios-skipforward"></i>
-                    <i title="Volume" class="ion-volume-high"></i>
+                    <i title="Previous" id="audio-prev" class="ion-ios-skipbackward"></i>
+                    <i title="Play" id="audio-play" class="ion-ios-play"></i>
+                    <i title="Pause" id="audio-pause" class="ion-ios-pause"></i>
+                    <i title="Next" id="audio-next" class="ion-ios-skipforward"></i>
+                    <i title="Volume" id="audio-volume" class="ion-volume-high"></i>
                 </div>
             </div>
         </div>
     </div>
+    <script src="js/app.js"></script>
 </body>
 
 </html>
