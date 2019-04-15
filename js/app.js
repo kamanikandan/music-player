@@ -4,6 +4,7 @@ class MusicPlayer {
     this.playList = [];
     this.currentAudio = document.getElementById("audio-track");
     this.currentTrack = 1;
+    this.playLoop = false;
   }
 }
 
@@ -85,6 +86,7 @@ mp.playList = [
 ];
 generatePlayList();
 // playCurrentTrack(mp.currentTrack);
+//Creating PlayList from Object
 function generatePlayList() {
   let audioPlayList = document.getElementById("audio-playlist");
   mp.playList.forEach((music, index) => {
@@ -98,6 +100,7 @@ function generatePlayList() {
   });
 }
 
+//Binding click event for all tracks
 let tableRows = document.querySelectorAll(".audio-playlist tr");
 tableRows.forEach(element => {
   element.addEventListener("click", function(event) {
@@ -108,6 +111,7 @@ tableRows.forEach(element => {
   });
 });
 
+//Play the current selected Audio
 function playCurrentTrack(currentTrack) {
   let currentAudio = mp.playList.filter(
     m => m.id === mp.playList[currentTrack].id
@@ -118,20 +122,35 @@ function playCurrentTrack(currentTrack) {
   document.getElementById("currentTrackArtist").innerHTML =
     currentAudio[0].artist;
   mp.currentAudio.setAttribute("src", currentAudio[0].url);
-  mp.currentAudio.volume = 0.1;
   mp.currentAudio.play();
 }
 
+// Controls whether to loop or not
+let audioLoop = 1;
+document
+  .getElementById("audio-loop")
+  .addEventListener("click", function(event) {
+    if (audioLoop === 1) {
+      mp.playLoop = true;
+      audioLoop = 2;
+    } else mp.audioLoop = false;
+  });
+
+// Control to Play an Audio
 document
   .getElementById("audio-play")
   .addEventListener("click", function(event) {
     mp.currentAudio.play();
   });
+
+// Control to Pause an Audio
 document
   .getElementById("audio-pause")
   .addEventListener("click", function(event) {
     mp.currentAudio.pause();
   });
+
+//Play Next Audio
 document
   .getElementById("audio-next")
   .addEventListener("click", function(event) {
@@ -139,6 +158,8 @@ document
     else mp.currentTrack++;
     playCurrentTrack(mp.currentTrack);
   });
+
+//Play Previous Audio
 document
   .getElementById("audio-prev")
   .addEventListener("click", function(event) {
@@ -146,6 +167,8 @@ document
     else mp.currentTrack--;
     playCurrentTrack(mp.currentTrack);
   });
+
+// Increase Volume
 document
   .getElementById("audio-volume")
   .addEventListener("click", function(event) {
@@ -156,8 +179,10 @@ document
     }
   });
 
+//Play Next Audio if Ended
 mp.currentAudio.addEventListener("ended", function(event) {
-  if (mp.currentTrack === mp.playList.length - 1) mp.currentTrack = 1;
+  if (mp.currentTrack === mp.playList.length - 1 && mp.playLoop)
+    mp.currentTrack = 1;
   else mp.currentTrack++;
   playCurrentTrack(mp.currentTrack);
 });
