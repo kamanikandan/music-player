@@ -67,9 +67,9 @@ mp.playList = [
   },
   {
     id: 10,
-    title: "Dunnock in Second",
-    artist: "John Smith",
-    url: "audios/audio1.mp3"
+    title: "Never Let you go",
+    artist: "David Smith",
+    url: "audios/audio3.mp3"
   },
   {
     id: 11,
@@ -79,18 +79,17 @@ mp.playList = [
   },
   {
     id: 12,
-    title: "Never Let you go",
-    artist: "David Smith",
-    url: "audios/audio3.mp3"
+    title: "Dunnock in Second",
+    artist: "John Smith",
+    url: "audios/audio1.mp3"
   }
 ];
 generatePlayList();
-// playCurrentTrack(mp.currentTrack);
 //Creating PlayList from Object
 function generatePlayList() {
   let audioPlayList = document.getElementById("audio-playlist");
   mp.playList.forEach((music, index) => {
-    let tr = `<tr data-music-url=${music.id}>
+    let tr = `<tr class="" id=audio${music.id} data-music-url=${music.id}>
         <td>${index + 1}</td>
         <td>${music.title}</td>
         <td>${music.artist}</td>
@@ -104,24 +103,27 @@ function generatePlayList() {
 let tableRows = document.querySelectorAll(".audio-playlist tr");
 tableRows.forEach(element => {
   element.addEventListener("click", function(event) {
-    let audioTrack = event.target.parentElement.getAttribute("data-music-url");
-    event.target.parentElement.classList.toggle("playing-track");
-    mp.currentTrack = parseInt(audioTrack) - 1;
+    tableRows.forEach(el => {
+      el.classList.remove("playing-track");
+    });
+    event.currentTarget.classList.add("playing-track");
+    let audioTrack =
+      event.target.parentElement.getAttribute("data-music-url") ||
+      event.target.getAttribute("data-music-url");
+    mp.currentTrack = parseInt(audioTrack);
     playCurrentTrack(mp.currentTrack);
+    document.getElementById("audio-play").style.display = "none";
+    document.getElementById("audio-pause").style.display = "inline-block";
   });
 });
 
 //Play the current selected Audio
 function playCurrentTrack(currentTrack) {
-  let currentAudio = mp.playList.filter(
-    m => m.id === mp.playList[currentTrack].id
-  );
+  let currentAudio = mp.playList[currentTrack - 1];
   mp.currentTrack = currentTrack;
-  document.getElementById("currentTrackTitle").innerHTML =
-    currentAudio[0].title;
-  document.getElementById("currentTrackArtist").innerHTML =
-    currentAudio[0].artist;
-  mp.currentAudio.setAttribute("src", currentAudio[0].url);
+  document.getElementById("currentTrackTitle").innerHTML = currentAudio.title;
+  document.getElementById("currentTrackArtist").innerHTML = currentAudio.artist;
+  mp.currentAudio.setAttribute("src", currentAudio.url);
   mp.currentAudio.play();
 }
 
@@ -140,13 +142,17 @@ document
 document
   .getElementById("audio-play")
   .addEventListener("click", function(event) {
-    mp.currentAudio.play();
+    document.getElementById("audio-play").style.display = "none";
+    document.getElementById("audio-pause").style.display = "inline-block";
+    playCurrentTrack(mp.currentTrack);
   });
 
 // Control to Pause an Audio
 document
   .getElementById("audio-pause")
   .addEventListener("click", function(event) {
+    document.getElementById("audio-pause").style.display = "none";
+    document.getElementById("audio-play").style.display = "inline-block";
     mp.currentAudio.pause();
   });
 
@@ -181,8 +187,11 @@ document
 
 //Play Next Audio if Ended
 mp.currentAudio.addEventListener("ended", function(event) {
-  if (mp.currentTrack === mp.playList.length - 1 && mp.playLoop)
+  if (mp.currentTrack === mp.playList.length && mp.playLoop) {
     mp.currentTrack = 1;
-  else mp.currentTrack++;
-  playCurrentTrack(mp.currentTrack);
+  } else mp.currentTrack++;
+  if (mp.currentTrack !== mp.playList.length) {
+    let nextAudio = document.getElementById("audio" + mp.currentTrack);
+    nextAudio.click();
+  }
 });
